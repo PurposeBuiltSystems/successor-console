@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Successor Console</title>
+
+  <!-- Office.js -->
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+  <!-- MSAL Browser (provides createNestablePublicClientApplication for NAA) -->
+  <script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@3.28.1/lib/msal-browser.min.js"></script>
+  <!-- JSZip (assembles the .docx packages client-side) -->
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
+  <link rel="stylesheet" href="taskpane.css" />
+</head>
+<body>
+  <header class="app-head">
+    <h1>Successor Console</h1>
+    <p class="sub">Navigate an inherited mailbox — then distill it into a reviewable knowledge pack your Copilot agent can cite.</p>
+  </header>
+
+  <section class="controls">
+    <label class="field">Mailbox to scan (blank = your own; or a shared mailbox you have access to)
+      <input id="mailbox" type="text" placeholder="retiree@agency.gov" />
+    </label>
+    <label class="field">Owner's name (for the pack)
+      <input id="ownerName" type="text" placeholder="Jane Doe" />
+    </label>
+    <details id="options" class="options">
+      <summary>Options</summary>
+      <div class="row">
+        <label>Years back
+          <input id="yearsBack" type="number" min="1" max="10" value="3" />
+        </label>
+        <label>Max precedent pairs
+          <input id="maxPairs" type="number" min="20" max="500" value="200" />
+        </label>
+      </div>
+      <p class="hint">Everything is deterministic extraction — verbatim excerpts with links back to the source emails. No AI reads or writes anything here; your organization's own Copilot agent reads the finished, human-reviewed pack.</p>
+    </details>
+    <button id="scan" class="primary">Scan mailbox</button>
+  </section>
+
+  <section id="status" class="status" hidden></section>
+
+  <section id="results" class="results" hidden>
+    <div class="tabs" id="tabs">
+      <button data-tab="people" class="tab active">People</button>
+      <button data-tab="open" class="tab">Open items</button>
+      <button data-tab="topics" class="tab">Topics</button>
+      <button data-tab="files" class="tab">Files</button>
+    </div>
+    <input id="search" type="text" class="search" placeholder="Filter…" />
+    <div id="tabContent"></div>
+
+    <div class="packbox">
+      <h2>Build the knowledge pack</h2>
+      <label class="field">Destination — paste a SharePoint folder link (recommended for agents), or leave blank for your OneDrive
+        <input id="destUrl" type="text" placeholder="https://yourorg.sharepoint.com/sites/…  (folder share link)" />
+      </label>
+      <label class="check"><input id="emitAgent" type="checkbox" checked />
+        Also write a ready-made “Ask the Archive.agent” (best-effort; SharePoint destinations only)</label>
+      <button id="build" class="primary">Build knowledge pack</button>
+      <div id="packResult" class="pack-result" hidden></div>
+    </div>
+  </section>
+
+  <script src="../graph.js?v=1"></script>
+  <script src="../derive.js?v=1"></script>
+  <script src="../docx.js?v=1"></script>
+  <script src="../pack.js?v=1"></script>
+  <script src="taskpane.js?v=1"></script>
+</body>
+</html>

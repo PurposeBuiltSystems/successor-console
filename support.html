@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support — Successor Console</title>
+  <style>
+    body { font-family: -apple-system, Segoe UI, sans-serif; margin: 3rem auto; max-width: 44rem; padding: 0 1rem; color: #242424; line-height: 1.55; }
+    h1 { color: #0f6cbd; }
+    h2 { margin-top: 2rem; }
+    code { background: #f3f2f1; padding: 0.1rem 0.3rem; border-radius: 3px; }
+    .muted { color: #616161; }
+  </style>
+</head>
+<body>
+  <h1>Support</h1>
+  <p class="muted">Add-in: <strong>Successor Console</strong></p>
+
+  <h2>How to use it</h2>
+  <ol>
+    <li>Open any email and click <strong>Successor Console</strong> on the ribbon.</li>
+    <li>Enter the shared mailbox address you inherited (or leave blank for your
+        own mailbox) and click <strong>Scan mailbox</strong>. Sign in if prompted.</li>
+    <li>Browse the tabs: People, Open items, Topics, Files. The filter box
+        searches whatever tab you're on.</li>
+    <li>To build the knowledge pack: paste a SharePoint folder link (recommended)
+        or leave blank for OneDrive, then click <strong>Build knowledge pack</strong>.</li>
+    <li><strong>Review the pack</strong> — read every file, delete what shouldn't
+        become institutional knowledge, sign manifest.docx — then follow
+        README.txt in the pack to create the Copilot agent (about 30 seconds).</li>
+  </ol>
+
+  <h2>Frequently asked</h2>
+  <p><strong>“Access denied” on the shared mailbox.</strong> You need
+     <em>Full Access</em> to that mailbox, granted by your IT/Exchange admin,
+     and the address must be exact. The add-in cannot grant or bypass access.</p>
+  <p><strong>Why .docx and not Markdown?</strong> Microsoft's agents can't use
+     .md files as knowledge; .docx is fully supported and the files stay small
+     on purpose (unlicensed tenants skip SharePoint files over 7&nbsp;MB).</p>
+  <p><strong>The .agent file doesn't open / isn't recognized.</strong> It's a
+     best-effort convenience using a community-documented format. Use the manual
+     step in the pack's README.txt instead: select the folder in SharePoint →
+     <strong>Create an agent</strong>. That's the supported path. Preflights:
+     your org needs a Microsoft 365 Copilot license (any one user) or
+     pay-as-you-go agent billing, and "Restricted SharePoint Search" must be off.</p>
+  <p><strong>The agent can't find newly added files.</strong> New uploads take a
+     few minutes to index. Also confirm the agent's knowledge points at the pack
+     folder.</p>
+  <p><strong>Some open items or precedents look wrong.</strong> Expected —
+     detection is deterministic best-effort (a "thanks!" can read as an answer).
+     That's why the pack is reviewed by a human before use.</p>
+
+  <h2>Contact</h2>
+  <p>Bugs and questions:
+     <a href="mailto:Matthew@purposebuilt.systems">Matthew@purposebuilt.systems</a>
+     · Issues and pull requests welcome on
+     <a href="https://github.com/PurposeBuiltSystems/successor-console">GitHub</a>.</p>
+</body>
+</html>

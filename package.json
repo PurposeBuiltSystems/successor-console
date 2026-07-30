@@ -1,0 +1,15 @@
+{
+  "name": "successor-console",
+  "version": "1.0.0",
+  "description": "Outlook add-in that navigates an inherited mailbox and distills it into a reviewable knowledge pack (verbatim excerpts + source links) ready for a Copilot agent.",
+  "private": true,
+  "scripts": {
+    "validate": "office-addin-manifest validate manifest.xml",
+    "test": "node test/derive.test.js"
+  },
+  "author": "Matthew Miller",
+  "license": "MIT",
+  "devDependencies": {
+    "office-addin-manifest": "^2.0.4"
+  }
+}

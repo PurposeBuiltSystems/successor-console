@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  Successor Console - Outlook add-in (add-in only / XML manifest).
+
+  One task-pane button on the message-read ribbon. The pane scans a mailbox
+  the signed-in user has been granted access to (typically a departed
+  employee's shared mailbox) and derives: top correspondents, open items at
+  departure, topic map, and attachment index - then distills a reviewable
+  knowledge pack of .docx files (verbatim excerpts + source links) into
+  OneDrive or SharePoint, ready to become a Copilot agent's knowledge.
+
+  Sign-in uses nested app authentication (MSAL) - no backend. Delegated
+  scopes only: Mail.Read + Mail.Read.Shared + Files.ReadWrite.All. All
+  extraction is deterministic - no AI reads or writes anything in this
+  add-in. Desktop/web only in v1.
+-->
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+  xsi:type="MailApp">
+
+  <Id>5f7ad475-780d-4350-91f9-9452a68ebb6c</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>PurposeBuiltSystems</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Successor Console" />
+  <Description DefaultValue="Inherited a mailbox? Navigate it — then distill it into a reviewable knowledge pack of verbatim excerpts and source links, ready for your organization's Copilot agent." />
+  <IconUrl DefaultValue="https://purposebuiltsystems.github.io/successor-console/assets/icon-64.png" />
+  <HighResolutionIconUrl DefaultValue="https://purposebuiltsystems.github.io/successor-console/assets/icon-128.png" />
+  <SupportUrl DefaultValue="https://purposebuiltsystems.github.io/successor-console/support.html" />
+
+  <AppDomains>
+    <AppDomain>https://purposebuiltsystems.github.io</AppDomain>
+    <AppDomain>https://login.microsoftonline.com</AppDomain>
+  </AppDomains>
+
+  <Hosts>
+    <Host Name="Mailbox" />
+  </Hosts>
+
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.5" />
+    </Sets>
+  </Requirements>
+
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://purposebuiltsystems.github.io/successor-console/src/taskpane/taskpane.html" />
+        <RequestedHeight>250</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <!-- ReadItem only: the pane never reads the open message; all data access
+       happens via delegated Graph scopes. -->
+  <Permissions>ReadItem</Permissions>
+
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read" />
+  </Rule>
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.5">
+        <bt:Set Name="Mailbox" />
+      </bt:Sets>
+    </Requirements>
+
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+          <ExtensionPoint xsi:type="MessageReadCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="successorConsoleGroup">
+                <Label resid="GroupLabel" />
+                <Control xsi:type="Button" id="openSuccessorConsoleButton">
+                  <Label resid="ButtonLabel" />
+                  <Supertip>
+                    <Title resid="ButtonLabel" />
+                    <Description resid="ButtonTip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16" />
+                    <bt:Image size="32" resid="Icon.32" />
+                    <bt:Image size="80" resid="Icon.80" />
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="Taskpane.Url" />
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16" DefaultValue="https://purposebuiltsystems.github.io/successor-console/assets/icon-16.png" />
+        <bt:Image id="Icon.32" DefaultValue="https://purposebuiltsystems.github.io/successor-console/assets/icon-32.png" />
+        <bt:Image id="Icon.80" DefaultValue="https://purposebuiltsystems.github.io/successor-console/assets/icon-80.png" />
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://purposebuiltsystems.github.io/successor-console/src/taskpane/taskpane.html" />
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="GroupLabel" DefaultValue="Successor Console" />
+        <bt:String id="ButtonLabel" DefaultValue="Successor Console" />
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="ButtonTip" DefaultValue="Navigate an inherited mailbox and distill it into a reviewable knowledge pack for your organization's Copilot agent." />
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>
