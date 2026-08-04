@@ -15,9 +15,9 @@
   var activeTab = "people";
 
   Office.onReady(function () {
-    byId("scan").addEventListener("click", scan);
-    byId("build").addEventListener("click", build);
-    byId("search").addEventListener("input", renderTab);
+    on("scan", "click", scan);
+    on("build", "click", build);
+    on("search", "input", renderTab);
     Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (b) {
       b.addEventListener("click", function () {
         activeTab = b.getAttribute("data-tab");
@@ -30,6 +30,19 @@
   });
 
   function byId(id) { return document.getElementById(id); }
+
+  /**
+   * Outlook caches the pane HTML but the ?v= query string makes it fetch
+   * JavaScript fresh, so a returning user can run today's JS against
+   * yesterday's page. Binding through this helper means a missing element
+   * costs one feature instead of throwing and leaving every later button
+   * unbound — a whole dead pane.
+   */
+  function on(id, ev, fn) {
+    var el = byId(id);
+    if (el) { el.addEventListener(ev, fn); }
+    return el;
+  }
 
   function setStatus(kind, text) {
     var el = byId("status");
