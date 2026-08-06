@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial — Successor Console</title>
+  <style>
+    body { font-family: -apple-system, Segoe UI, sans-serif; margin: 3rem auto; max-width: 44rem; padding: 0 1rem; color: #242424; line-height: 1.6; }
+    h1 { color: #0f6cbd; } h2 { color: #0f6cbd; margin-top: 2.4rem; } h3 { margin-top: 1.6rem; }
+    .step { background: #f8f8f8; border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
+    .step b { color: #0f6cbd; }
+    .note { background: #fff8e6; border-radius: 8px; padding: 10px 14px; margin: 12px 0; }
+    .lede { background: #eff6fc; border-radius: 8px; padding: 12px 16px; }
+    .see { border-left: 3px solid #0f6cbd; background: #f4f9fd; padding: 8px 14px; margin: 8px 0 14px; font-size: .95em; }
+    .see b { color: #0f6cbd; }
+    .wrong { border-left: 3px solid #c4314b; background: #fdf3f4; padding: 10px 14px; margin: 12px 0; }
+    .wrong b { color: #c4314b; }
+    .stop { border: 2px solid #c4314b; background: #fdf3f4; border-radius: 8px; padding: 12px 16px; margin: 16px 0; }
+    .stop b { color: #c4314b; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .92em; }
+    th, td { border: 1px solid #d1d1d1; padding: 6px 10px; text-align: left; vertical-align: top; }
+    th { background: #eef4f6; }
+    code { background: #f0f0f0; padding: 1px 5px; border-radius: 4px; font-size: .92em; }
+    footer { margin-top: 3rem; color: #616161; font-size: .9em; }
+    @media print { body { margin: 0.5in; } }
+  </style>
+</head>
+<body>
+  <h1>Successor Console — Tutorial</h1>
+  <p class="lede">Someone retires after thirty years. Their mailbox is handed to you, and every
+     answer you need is somewhere inside a hundred thousand messages you can't search
+     meaningfully. This turns that pile into a <b>reviewed knowledge pack your organisation's
+     Copilot agent can answer from — with citations back to real emails</b>.</p>
+
+  <div class="stop"><b>What this is not.</b> It does not create a digital version of the person,
+     and it must never be presented as one. Every word in the pack is a <b>verbatim copy of
+     something they actually wrote</b>, carrying a link to the email it came from. Nothing is
+     generated, paraphrased, or written in their voice. The agent's ground rules say plainly:
+     <b>never speak as the person</b>. What you get is a cited archive of precedent — which is
+     both more honest and more useful than an impression of someone.</div>
+
+  <h2>Before you start</h2>
+  <div class="step"><b>You need Full Access to the mailbox, granted by IT.</b> The add-in uses
+     delegated permissions, so it can only open what your own account has already been given.
+     If IT hasn't granted access, nothing here will work — and that's the correct behaviour.</div>
+  <div class="note"><b>Do this before they leave, if you possibly can.</b> The pack includes an
+     auto-generated exit interview built from the gaps — and those questions are only worth
+     having while there's still someone to ask.</div>
+
+  <h2>Part 1 — Navigate the mailbox</h2>
+  <div class="step"><b>1.</b> Open <b>Successor Console</b> from the ribbon.</div>
+  <div class="step"><b>2.</b> Set <b>Mailbox to scan</b> (blank scans your own; otherwise the
+     shared mailbox address), the <b>Owner's name</b>, and <b>Years back</b>. Click
+     <b>Scan mailbox</b>.</div>
+  <div class="see"><b>You should see</b> four tabs fill in:</div>
+  <table>
+    <tr><th>Tab</th><th>What it answers</th></tr>
+    <tr><td><b>People</b></td><td>Who they actually corresponded with, ranked — the real network, not the org chart.</td></tr>
+    <tr><td><b>Open items</b></td><td>Asks that never got answered, <b>in both directions</b>. This is your live handoff list, and it's the tab to read first on day one.</td></tr>
+    <tr><td><b>Topics</b></td><td>A deterministic map of what they worked on.</td></tr>
+    <tr><td><b>Files</b></td><td>Searchable attachment index, each linked to the email that carried it.</td></tr>
+  </table>
+  <p>This half is useful on its own. Even if you never build a pack, <b>Open items</b> on the
+     first morning is worth the install.</p>
+
+  <h2>Part 2 — Build the knowledge pack</h2>
+  <div class="step">Under <b>Build the knowledge pack</b>, set <b>Max precedent pairs</b> and a
+     <b>Destination</b> — paste a SharePoint folder link, which is what you want if the pack is
+     to become an organisational agent. Click <b>Build knowledge pack</b>.</div>
+
+  <p>You get a folder of <code>.docx</code> files:</p>
+  <table>
+    <tr><th>File</th><th>Contents</th></tr>
+    <tr><td><code>manifest.docx</code></td><td>Provenance, and a <b>review sign-off line</b> for a human to put their name on.</td></tr>
+    <tr><td><code>people.docx</code>, <code>open-items.docx</code>, <code>projects.docx</code>, <code>attachments.docx</code></td><td>The four views above, as documents.</td></tr>
+    <tr><td><code>precedents/&lt;topic&gt;.docx</code></td><td><b>Real questions with their real answers</b>, verbatim, each linked to its source email. This is the substance.</td></tr>
+    <tr><td><code>Exit interview - &lt;name&gt;.docx</code></td><td>Questions auto-generated for the topics where the written record is <b>thin</b> — the things decided on the phone.</td></tr>
+    <tr><td><code>README.txt</code></td><td>The 30-second recipe for creating the agent, plus preflight checks.</td></tr>
+    <tr><td><code>REVIEW-PROMPTS.txt</code></td><td>Optional Copilot prompts that help a human do the review.</td></tr>
+    <tr><td><code>Ask the Archive.agent</code></td><td>A best-effort ready-made SharePoint agent file. Convenience only — <b>the manual recipe in README.txt is the supported path</b>, because the format is community-documented rather than official.</td></tr>
+  </table>
+
+  <div class="note">Why <code>.docx</code> and not Markdown: Markdown isn't usable agent
+     knowledge in SharePoint. Files are also kept small deliberately — unlicensed tenants skip
+     SharePoint files over 7 MB, and a pack that silently isn't indexed is worse than no pack.</div>
+
+  <h2>Part 3 — Review. This is not optional.</h2>
+  <div class="stop"><b>The pack is a review gate, and the whole design depends on you using it
+     as one.</b> Read every file. Delete anything that shouldn't become institutional knowledge —
+     personal correspondence, HR matters, a candid assessment of a colleague, anything
+     confidential or exempt. Then sign the line in <code>manifest.docx</code>.<br /><br />
+     This is the entire reason the tool builds a pack instead of pointing an agent at the raw
+     mailbox. A mailbox contains things that must never be answerable by a chatbot the whole
+     division can query. <b>Grounding an agent on unreviewed mail would leak them, quietly and
+     at scale.</b></div>
+  <div class="step">Only after review: follow <code>README.txt</code> to create the agent from
+     the pack.</div>
+
+  <h2>Why it works this way</h2>
+  <p><b>Deterministic extraction, never generation.</b> The add-in makes no AI calls at all. It
+     copies and links. AI enters only later, at question time, when your Copilot agent reads the
+     finished pack — so an answer cites a real decision the person really made, with the email
+     attached, instead of producing a fluent paraphrase nobody can check.</p>
+  <p>That distinction is the product. A summary of what someone believed is an opinion with no
+     author. A quoted decision with a date and a link is <b>evidence</b>, and a successor can act
+     on evidence.</p>
+
+  <h2>Permissions and data</h2>
+  <p>Three delegated permissions: <code>Mail.Read</code>, <code>Mail.Read.Shared</code>,
+     <code>Files.ReadWrite.All</code>. No backend, no AI calls, no data collection. The pack is
+     written to your organisation's own OneDrive or SharePoint and never leaves the Microsoft 365
+     boundary.</p>
+
+  <footer>
+    <a href="index.html">Overview</a> ·
+    <a href="support.html">Support</a> ·
+    <a href="privacy-policy.html">Privacy</a><br />
+    PurposeBuilt Systems · Successor Console
+  </footer>
+</body>
+</html>
