@@ -13,13 +13,19 @@
   <!-- JSZip (assembles the .docx packages client-side) -->
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
-  <link rel="stylesheet" href="taskpane.css?v=2" />
+  <link rel="stylesheet" href="taskpane.css?v=3" />
 </head>
 <body>
   <header class="app-head">
     <h1>Successor Console</h1>
     <p class="sub">Navigate an inherited mailbox — then distill it into a reviewable knowledge pack your Copilot agent can cite.</p>
   </header>
+  <!-- Certification 1100.5.7.1: a visible way out wherever there is a way in. -->
+  <div id="authRow" class="auth-row">
+    <span id="authWho">Not signed in</span>
+    <button id="signIn" class="linkish" type="button" hidden>Sign in</button>
+    <button id="signOut" class="linkish" type="button" hidden>Sign out</button>
+  </div>
 
   <section class="controls">
     <label class="field">Mailbox to scan (blank = your own; or a shared mailbox you have access to)
@@ -67,10 +73,10 @@
     </div>
   </section>
 
-  <script src="../graph.js?v=2"></script>
-  <script src="../derive.js?v=2"></script>
-  <script src="../docx.js?v=2"></script>
-  <script src="../pack.js?v=2"></script>
-  <script src="taskpane.js?v=2"></script>
+  <script src="../graph.js?v=3"></script>
+  <script src="../derive.js?v=3"></script>
+  <script src="../docx.js?v=3"></script>
+  <script src="../pack.js?v=3"></script>
+  <script src="taskpane.js?v=3"></script>
 </body>
 </html>

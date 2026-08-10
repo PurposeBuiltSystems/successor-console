@@ -14,7 +14,53 @@
   var scanData = null; // results of the last scan
   var activeTab = "people";
 
+  /**
+   * Account row. Certification policy 1100.5.7.1 requires a visible way out
+   * wherever an add-in signs a user in. Every element access is guarded:
+   * Outlook desktop caches the pane HTML while ?v= fetches fresh JS, so this
+   * code can run against a page that predates these controls, and an
+   * unguarded dereference here would throw inside Office.onReady and take
+   * the whole pane down as "Add-in Error".
+   */
+  function authSet(id, k, v) { var e = document.getElementById(id); if (e) { e[k] = v; } }
+
+  async function renderAuthState() {
+    var who = null;
+    try { who = await GraphData.currentAccount(); } catch (e) { who = null; }
+    authSet("authWho", "textContent", who ? ("Signed in as " + who) : "Not signed in");
+    authSet("signOut", "hidden", !who);
+    authSet("signIn", "hidden", !!who);
+  }
+
+  async function doSignIn() {
+    authSet("signIn", "disabled", true);
+    try { await GraphData.getToken(); }
+    catch (e) { authSet("authWho", "textContent", "Sign-in failed: " + ((e && e.message) || e)); }
+    finally { authSet("signIn", "disabled", false); renderAuthState(); }
+  }
+
+  async function doSignOut() {
+    authSet("signOut", "disabled", true);
+    try {
+      await GraphData.signOut();
+      authSet("authWho", "textContent", "Signed out \u2014 this add-in's saved tokens are cleared. " +
+        "Your Outlook session is separate and is not affected; no add-in can end it.");
+    } catch (e) {
+      authSet("authWho", "textContent", "Sign-out failed: " + ((e && e.message) || e));
+    } finally {
+      authSet("signOut", "disabled", false);
+      setTimeout(renderAuthState, 2500);
+    }
+  }
+
+
   Office.onReady(function () {
+    // Certification 1100.5.7.1 - sign-out must be reachable.
+    var _si = document.getElementById("signIn");
+    if (_si) { _si.addEventListener("click", doSignIn); }
+    var _so = document.getElementById("signOut");
+    if (_so) { _so.addEventListener("click", doSignOut); }
+    renderAuthState();
     on("scan", "click", scan);
     on("build", "click", build);
     on("search", "input", renderTab);
